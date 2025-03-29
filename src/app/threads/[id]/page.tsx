@@ -28,6 +28,9 @@ export default async function ThreadPage({params} : {params: Promise<{id: string
                             <p className="text-sm text-gray-500 mt-4">
                                 Created by <span className="font-medium text-gray-700">{thread.createdByName}</span>
                             </p>
+                            <p className="text-xs text-gray-500">
+                                {thread.createdAt.toLocaleString()}
+                            </p>
                         </div>
                         <div className="">
                             <Posts threadId={id} />
@@ -35,7 +38,6 @@ export default async function ThreadPage({params} : {params: Promise<{id: string
                     </div>
                     <div className="flex flex-col gap-4 justify-center items-center">
                         { session && <MakePost threadId={id} />}
-                        <SignInOutButton />
                     </div>
                 </div> }
                 { !thread && 

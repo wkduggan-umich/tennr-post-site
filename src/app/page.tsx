@@ -25,7 +25,6 @@ export default async function Home() {
               </div> 
               <div className="flex flex-col gap-4 justify-center items-center">
                 <MakeThread/>
-                <SignInOutButton />
               </div> 
             </div>
           }
@@ -34,7 +33,7 @@ export default async function Home() {
                 THREADS
               </h1>
               <div className="flex justify-center">
-                <SignInOutButton />
+                <SignInOutButton session={session !== null}/>
               </div>
             </div>
           }

@@ -4,7 +4,7 @@ import VoteButton from "./vote_button";
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { api } from "~/trpc/react";
 
-export default function Post({post, threadId}: {post : {id : number, name : string, text : string, votes : number, createdByName : string | null }, threadId : number} ) {
+export default function Post({post, threadId}: {post : {id : number, name : string, text : string, votes : number, createdByName : string | null, createdAt : Date }, threadId : number} ) {
   const utils = api.useUtils();
   const userHasVoted = api.post.userHasVoted.useQuery({ postId : post.id}).data;
   const _deletePost = api.post.delete.useMutation({
@@ -27,6 +27,9 @@ export default function Post({post, threadId}: {post : {id : number, name : stri
             </h1>
             <p className="text-sm text-gray-500">
               Created by {post.createdByName}
+            </p>
+            <p className="text-xs text-gray-500">
+              {post.createdAt.toLocaleString()}
             </p>
               </div>
             </div>
