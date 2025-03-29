@@ -6,6 +6,7 @@ import { api } from "~/trpc/react";
 
 export default function Post({post, threadId}: {post : {id : number, name : string, text : string, votes : number, createdByName : string | null }, threadId : number} ) {
   const utils = api.useUtils();
+  const userHasVoted = api.post.userHasVoted.useQuery({ postId : post.id}).data;
   const _deletePost = api.post.delete.useMutation({
     onSuccess: () => {
       void utils.post.getAllPostForThread.invalidate({ threadId : threadId})
@@ -38,6 +39,7 @@ export default function Post({post, threadId}: {post : {id : number, name : stri
               <div className="flex flex-row items-center gap-4 w-full">
                 <VoteButton 
                   up_down={true} 
+                  disabled={userHasVoted ?? false}
                   post={{ id: post.id, votes: post.votes }} 
                 />
                 <p className="text-lg font-semibold text-gray-800">
@@ -45,6 +47,7 @@ export default function Post({post, threadId}: {post : {id : number, name : stri
                 </p>
                 <VoteButton 
                   up_down={false} 
+                  disabled={userHasVoted ?? false}
                   post={{ id: post.id, votes: post.votes }} 
                 />
                 <button onClick={deletePost} className="cursor-pointer ml-auto flex items-center">

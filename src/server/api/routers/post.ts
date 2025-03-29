@@ -21,15 +21,6 @@ export const postRouter = createTRPCRouter({
       });
     }),
 
-  getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
-
-    return post ?? null;
-  }),
-
   getAllPosts : protectedProcedure.query(async ({ ctx }) => {
     const posts = await ctx.db.post.findMany(
       {
@@ -62,20 +53,31 @@ export const postRouter = createTRPCRouter({
         throw new Error("Post not found");
       }
 
+      if (post.voterIds.some((user) => user == ctx.session.user.id)) {
+        throw new Error("User has voted")
+      }
+
       return ctx.db.post.update({
         where: { id: input.postId },
-        data: { votes : input.up_down ? post.votes + 1 : post.votes - 1 },
+        data: { 
+          votes : input.up_down ? post.votes + 1 : post.votes - 1,
+          voterIds : post.voterIds.concat(ctx.session.user.id)
+        },
       });
     }),
 
-    get_vote: protectedProcedure
-    .input(z.object({ postId: z.number() }))
-    .query(async ({ ctx, input }) => {
-      const post = await ctx.db.post.findFirst({
+    userHasVoted : protectedProcedure
+    .input(z.object({ postId: z.number()}))
+    .query(async ({ ctx, input}) => {
+      const post = await ctx.db.post.findUnique({
         where: { id: input.postId },
       });
-  
-      return post?.votes ?? null;
+
+      if (!post) {
+        throw new Error("Post not found");
+      }
+
+      return post.voterIds.some((user) => user == ctx.session.user.id)
     }),
 
     getAllPostForThread : protectedProcedure

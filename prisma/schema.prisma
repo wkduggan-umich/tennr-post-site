@@ -36,6 +36,7 @@ model Post {
     createdByName String?
 
     votes Int @default(0)
+    voterIds String[]
 
     threadId Int
     thread   Thread @relation(fields: [threadId], references: [id])
