@@ -37,6 +37,7 @@ export const threadRouter = createTRPCRouter({
               title: input.title,
               text: input.text,
               createdBy: { connect: { id: ctx.session.user.id } },
+              createdByName : ctx.session.user.name,
             },
           });
         }),

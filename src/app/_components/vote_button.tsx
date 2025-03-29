@@ -2,8 +2,8 @@
 import { api } from "~/trpc/react";
 import { ArrowUpIcon, ArrowDownIcon } from '@heroicons/react/24/outline'
 
-export default function VoteButton ({up_down, post, onClick }: 
-        {up_down: boolean, post: {id: number, votes: number}, onClick: () => void}) {
+export default function VoteButton ({up_down, post }: 
+        {up_down: boolean, post: {id: number, votes: number}}) {
     const utils = api.useUtils();
 
     const vote_change = api.post.vote.useMutation({
@@ -16,18 +16,15 @@ export default function VoteButton ({up_down, post, onClick }:
         vote_change.mutate(
             { postId: post.id, up_down: up_down }
         );
-        onClick();
     };
 
     return (
-        <div>
-            <button onClick={handleClick} className="cursor-pointer">
-                {up_down ? (
-                    <ArrowUpIcon className="h-5 w-5 text-green-500 hover:scale-110 hover:text-green-600 transition-transform duration-200 ease-in-out" />
-                ) : (
-                    <ArrowDownIcon className="h-5 w-5 text-red-500 hover:scale-110 hover:text-red-600 transition-transform duration-200 ease-in-out" />
-                )}
-            </button>
-        </div>
+        <button onClick={handleClick} className="cursor-pointer">
+            {up_down ? (
+                <ArrowUpIcon className="h-5 w-5 text-green-500 hover:scale-110 hover:text-green-600 transition-transform duration-200 ease-in-out" />
+            ) : (
+                <ArrowDownIcon className="h-5 w-5 text-red-500 hover:scale-110 hover:text-red-600 transition-transform duration-200 ease-in-out" />
+            )}
+        </button>
     );
 }

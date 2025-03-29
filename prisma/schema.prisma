@@ -19,6 +19,7 @@ model Thread {
 
     createdBy   User   @relation(fields: [createdById], references: [id])
     createdById String
+    createdByName String?
 
     posts Post[]
 }

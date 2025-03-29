@@ -11,7 +11,7 @@ export default function Posts({threadId} : {threadId : number}) {
       <div className="flex flex-col overflow-y-auto gap-4">
         {posts_get?.map((post) => (
             <div key={post.id} className="w-full">
-                <Post post={post}/>
+                <Post post={post} threadId={threadId}/>
             </div>
         ))}
       </div>
