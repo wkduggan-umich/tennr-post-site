@@ -6,7 +6,7 @@ export default function Threads() {
     const threads = api.thread.getAllThreads.useQuery().data;
     const utils = api.useUtils();
     const handleHover = (threadId : number) => {
-        utils.post.getAllPostForThread.prefetch({threadId: threadId})
+        void utils.post.getAllPostForThread.prefetch({threadId: threadId});
     };
 
     return (

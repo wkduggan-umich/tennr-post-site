@@ -4,9 +4,10 @@ import MakePost from "~/app/_components/make_post";
 import SignInOutButton from "~/app/_components/sign_in_out";
 import Posts from "~/app/_components/posts";
 
-export default async function ThreadPage({params} : {params: {id: string}}) {
+export default async function ThreadPage({params} : {params: Promise<{id: string}>}) {
     const session = await auth();
-    const id = Number((await params).id);
+    const resolvedParams = await params;
+    const id = Number(resolvedParams.id);
 
     const thread = session ? await api.thread.getThreadById({threadId: id}) : null;
 

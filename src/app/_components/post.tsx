@@ -3,7 +3,7 @@
 import { useState } from "react";
 import VoteButton from "./vote_button";
 
-export default function Post({post}: {post : {id : number, name : string, text : string, votes : number, createdByName : string }} ) {
+export default function Post({post}: {post : {id : number, name : string, text : string, votes : number, createdByName : string | null }} ) {
   const [num_votes, setVotes] = useState(post.votes);
   
   return (

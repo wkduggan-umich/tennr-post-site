@@ -4,7 +4,6 @@ import { type Metadata } from "next";
 import { Geist } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
-import { auth } from "~/server/auth";
 import { HomeIcon } from '@heroicons/react/24/outline'
 import Link from "next/link";
 
@@ -26,6 +25,7 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${geist.variable}`}>
       <body className="flex flex-col h-screen">
+        {/* TODO: move this to its own component and add a on hover prefetch for the threads */}
         <Link href="/" className="flex items-center justify-center group">
           <HomeIcon className="h-8 mt-4 ml-4 transition-transform duration-200 group-hover:scale-110" />
         </Link>

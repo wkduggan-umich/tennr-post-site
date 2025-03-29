@@ -1,10 +1,9 @@
-import { threadId } from "worker_threads";
 import { z } from "zod";
 
 import {
   createTRPCRouter,
   protectedProcedure,
-  publicProcedure,
+  // publicProcedure,
 } from "~/server/api/trpc";
 
 export const postRouter = createTRPCRouter({
@@ -74,10 +73,6 @@ export const postRouter = createTRPCRouter({
     .query(async ({ ctx, input }) => {
       const post = await ctx.db.post.findFirst({
         where: { id: input.postId },
-      });
-
-      const user = await ctx.db.user.findFirst({
-        where: { id: post?.createdById},
       });
   
       return post?.votes ?? null;

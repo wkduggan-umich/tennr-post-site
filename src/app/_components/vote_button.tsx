@@ -7,13 +7,13 @@ export default function VoteButton ({up_down, post, onClick }:
     const utils = api.useUtils();
 
     const vote_change = api.post.vote.useMutation({
-        onSuccess: (vote_changed) => {
+        onSuccess: () => {
             void utils.post.getAllPostForThread.invalidate();
         }
     });
 
     const handleClick = () => {
-        const vote_changed = vote_change.mutate(
+        vote_change.mutate(
             { postId: post.id, up_down: up_down }
         );
         onClick();
