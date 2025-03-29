@@ -93,6 +93,14 @@ export const postRouter = createTRPCRouter({
     delete : protectedProcedure
     .input(z.object({ postId : z.number() }))
     .mutation(async ({ ctx, input }) => {
+      const post = await ctx.db.post.findFirst({
+        where: { id : input.postId }
+      })
+      
+      if(ctx.session.user.id != post?.createdById) {
+        throw new Error("Invalid deletion. User is not the creator.")
+      }
+
       return ctx.db.post.delete({
         where: { id : input.postId },
       })

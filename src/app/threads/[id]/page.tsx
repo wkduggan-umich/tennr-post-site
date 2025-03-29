@@ -33,7 +33,7 @@ export default async function ThreadPage({params} : {params: Promise<{id: string
                             </p>
                         </div>
                         <div className="">
-                            <Posts threadId={id} />
+                            <Posts threadId={id} sessionUserId={session.user.id} />
                         </div>
                     </div>
                     <div className="flex flex-col gap-4 justify-center items-center">

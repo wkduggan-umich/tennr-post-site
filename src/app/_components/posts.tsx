@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
 import Post from "./post";
 import { api } from "~/trpc/react";
 
-export default function Posts({threadId} : {threadId : number}) {
+export default function Posts({threadId, sessionUserId} : {threadId : number, sessionUserId : String}) {
   const posts_get = api.post.getAllPostForThread.useQuery({ threadId: threadId}).data;
 
   return (
@@ -11,7 +11,7 @@ export default function Posts({threadId} : {threadId : number}) {
       <div className="flex flex-col overflow-y-auto gap-4">
         {posts_get?.map((post) => (
             <div key={post.id} className="w-full">
-                <Post post={post} threadId={threadId}/>
+                <Post post={post} threadId={threadId} sessionUserId={sessionUserId}/>
             </div>
         ))}
       </div>

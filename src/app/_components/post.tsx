@@ -1,10 +1,11 @@
-"use client";
-
+"use client"
 import VoteButton from "./vote_button";
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { api } from "~/trpc/react";
 
-export default function Post({post, threadId}: {post : {id : number, name : string, text : string, votes : number, createdByName : string | null, createdAt : Date }, threadId : number} ) {
+export default function Post({post, threadId, sessionUserId}: 
+  {post : {id : number, name : string, text : string, votes : number, createdByName : string | null, createdAt : Date, createdById : String }, threadId : number, sessionUserId : String} ) {
+
   const utils = api.useUtils();
   const userHasVoted = api.post.userHasVoted.useQuery({ postId : post.id}).data;
   const _deletePost = api.post.delete.useMutation({
@@ -53,9 +54,9 @@ export default function Post({post, threadId}: {post : {id : number, name : stri
                   disabled={userHasVoted ?? false}
                   post={{ id: post.id, votes: post.votes }} 
                 />
-                <button onClick={deletePost} className="cursor-pointer ml-auto flex items-center">
+                { post.createdById == sessionUserId && <button onClick={deletePost} className="cursor-pointer ml-auto flex items-center">
                   <TrashIcon className="h-5 w-5 text-red-500 hover:scale-110 hover:text-red-600 transition-transform duration-200 ease-in-out"/>
-                </button>
+                </button> }
           </div>
         </div>
       </div>
