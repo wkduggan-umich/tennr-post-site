@@ -3,7 +3,7 @@
 import Post from "./post";
 import { api } from "~/trpc/react";
 
-export default function Posts({threadId, sessionUserId} : {threadId : number, sessionUserId : String}) {
+export default function Posts({threadId, sessionUserId} : {threadId : number, sessionUserId : string}) {
   const posts_get = api.post.getAllPostForThread.useQuery({ threadId: threadId}).data;
 
   return (

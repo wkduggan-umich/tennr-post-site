@@ -4,7 +4,7 @@ import { TrashIcon } from '@heroicons/react/24/outline'
 import { api } from "~/trpc/react";
 
 export default function Post({post, threadId, sessionUserId}: 
-  {post : {id : number, name : string, text : string, votes : number, createdByName : string | null, createdAt : Date, createdById : String }, threadId : number, sessionUserId : String} ) {
+  {post : {id : number, name : string, text : string, votes : number, createdByName : string | null, createdAt : Date, createdById : string }, threadId : number, sessionUserId : string} ) {
 
   const utils = api.useUtils();
   const userHasVoted = api.post.userHasVoted.useQuery({ postId : post.id}).data;
