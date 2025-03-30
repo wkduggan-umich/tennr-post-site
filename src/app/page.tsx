@@ -21,7 +21,11 @@ export default async function Home() {
                 <h1 className="text-5xl text-center">
                   THREADS
                 </h1>
-                <Threads/>
+                <div className="flex flex-col gap-4 max-h-[70vh] w-full max-w-4xl">
+                  <div className="flex flex-col overflow-y-auto gap-4 p-4 bg-gray-100 rounded-lg shadow-md scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+                    <Threads />
+                  </div>
+                </div>
               </div> 
               <div className="flex flex-col gap-4 justify-center items-center">
                 <MakeThread/>
