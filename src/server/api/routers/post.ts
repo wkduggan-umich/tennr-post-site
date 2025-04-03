@@ -105,4 +105,34 @@ export const postRouter = createTRPCRouter({
         where: { id : input.postId },
       })
     }),
+
+    getAllPostsForUser : protectedProcedure
+    .input(z.object({ userId : z.string() }))
+    .query(async ({ ctx, input }) => {
+      const posts = await ctx.db.post.findMany({
+        where : { createdById : input.userId }
+      })
+
+      return posts ?? null
+    }),
+
+    editPost : protectedProcedure
+    .input(z.object({ id : z.number(), new_name : z.string(), new_text : z.string() })).
+    mutation(async ({ ctx, input }) => {
+      const post = ctx.db.post.findFirst({
+        where : { id : input.id },
+      });
+
+      if(post == null) {
+        throw new Error("Invalid edit, post does not exist");
+      }
+
+      return ctx.db.post.update({
+        where : { id : input.id },
+        data : {
+          name : input.new_name,
+          text : input.new_text,
+        }
+      });
+    }),
 });
